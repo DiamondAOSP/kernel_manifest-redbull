@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: js6pak <me@6pak.dev>
+Date: Sat, 24 Jun 2023 00:10:58 +0200
+Subject: [PATCH] Include KernelSU as a module
+
+
+diff --git a/build.config.redbull.common b/build.config.redbull.common
+index ab842ed9209adb03ddbd990874b1fee0ac644cf5..c0b7ba6cf1b9ddf0fa5f07820ed4e5b8447b9967 100644
+--- a/build.config.redbull.common
++++ b/build.config.redbull.common
+@@ -5,6 +5,7 @@ EXT_MODULES="
+ private/msm-google-modules/wlan/qcacld-3.0
+ private/msm-google-modules/touch/fts
+ private/msm-google-modules/touch/sec
++modules/KernelSU/kernel
+ "
+ 
+ if [ -n "${BUILD_BOOT_IMG}" ]; then
+diff --git a/build.config.redbull.vintf b/build.config.redbull.vintf
+index 207f91da1f0e7e0c8320523a222f291e43315e03..c49a3f6e2ed7c30fade1ac8bbf97542a18f5198d 100644
+--- a/build.config.redbull.vintf
++++ b/build.config.redbull.vintf
+@@ -18,7 +18,11 @@ function update_config() {
+     -d CORESIGHT \
+     -e PID_IN_CONTEXTIDR \
+     -m CORESIGHT_PLACEHOLDER \
+-    -m CORESIGHT_AMBA_PLACEHOLDER
++    -m CORESIGHT_AMBA_PLACEHOLDER \
++    -e KPROBES \
++    -e HAVE_KPROBES \
++    -e KPROBE_EVENTS \
++    -m KSU
+ 
+   (cd ${OUT_DIR} && \
+     make O=${OUT_DIR} CLANG_TRIPLE=${CLANG_TRIPLE} CROSS_COMPILE=${CROSS_COMPILE} "${TOOL_ARGS[@]}" ${MAKE_ARGS} olddefconfig)
